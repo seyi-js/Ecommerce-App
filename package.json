@@ -1,5 +1,5 @@
 {
-  "name": "paystack",
+  "name": "ecommerce",
   "version": "1.0.0",
   "description": "MERN shopping list",
   "main": "server.js",
@@ -54,17 +54,25 @@
     "upper-case": "^2.0.1"
   },
   "devDependencies": {},
-   "scripts": {
+  "scripts": {
     "client-server": "npm i --prefix Client",
     "start": "node sever.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix Client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install  --prefix Client && npm run build --prefix Client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install  --prefix Client && npm run build --prefix Client"
   },
   "author": "ADEBAYO SAMUEL OLUWASEYI",
   "license": "MIT",
   "engines": {
     "node": "10.x"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seyi-js/Ecommerce-App.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seyi-js/Ecommerce-App/issues"
+  },
+  "homepage": "https://github.com/seyi-js/Ecommerce-App#readme"
 }
