@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Spinner } from 'reactstrap';
+import { Container} from 'reactstrap';
 import Carousel from 'react-bootstrap/Carousel'
 
 export function Banner() {

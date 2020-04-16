@@ -8,10 +8,11 @@ import {
     ITEMS_LOADING
   } from '../actions/types';
 const initialState = {
-    items : [],
+  items: [],
+  filteredItems: [],
   loading: false,
   cart: [],
-    loadedItem: []
+  loadedItem: []
     
 }
 
@@ -27,6 +28,7 @@ export default (state = initialState, action)=>{
         return {
           ...state,
           items: action.payload,
+          filteredItems: action.payload,
           loading: false
         };
       case ADD_TO_CART:

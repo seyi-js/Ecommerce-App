@@ -6,7 +6,6 @@ import {
     GET_ITEM,
     DELETE_CART,
     ADD_ITEM,
-    LOAD_ITEM,
     ITEMS_LOADING
 } from './types';
 
@@ -20,10 +19,11 @@ export const getItems = () => dispatch => {
     dispatch( setItemsLoading() );
     Axios
         .get( 'api/items' )
-        .then( res => dispatch( {
+        .then( res => {dispatch( {
             type: GET_ITEMS,
             payload: res.data
-        } ) )
+        } )
+    })
         .catch( err => {
             console.log(err)
         })
@@ -64,20 +64,7 @@ export const addToCart = ( id ) => dispatch => {
     .catch(err => console.log(err))
     
 } 
-//Load Edit Item
 
-export const item = (id) => dispatch => {
-   
-    Axios
-        .get(`api/items/edit/${id}`)
-        .then( res => {
-            dispatch( { type: LOAD_ITEM, payload:res.data } );
-            
-        } )
-        .catch(err => {
-            console.log(err)
-        })
-}
 
 //Edit Item
 export const edit = ( {id, item_name, description,features, price} ) => {
@@ -114,4 +101,5 @@ export const deleteProduct =(id)=> dispatch => {
         console.log(err)
     })
 }
+
 

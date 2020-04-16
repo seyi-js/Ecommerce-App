@@ -1,7 +1,3 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { deleteCart } from '../actions/itemActions';
-
 
 import {
 Button,
@@ -9,161 +5,125 @@ Modal,
 ModalHeader,
 ModalBody,
 ModalFooter,
-Form,
-FormGroup,
-Label,
-Input,
+
 NavLink,
-Alert,
+
 Table
 } from 'reactstrap';
+import React, { Component, browserHistory } from 'react'
+import PropTypes from 'prop-types'
+import util from './utils';
+import {Link, Redirect} from 'react-router-dom';
 
-export const Chart = (props) => {
-//
-const [ modal, setModal ] = useState( false );
-const [ backdrop, setBackdrop ] = useState( false );
-const [ quantity, setQuantity ] = useState(1);
-let carts = []
-    const { cart } = props.item;
-    const { cart_item } = props.cart;
-    console.log(cart_item)
-    
-    
-    
-  
-// console.log(cart[0])
-    cart.forEach( f => {
-        f.map( e => {
-       carts.push(e)
-   })
-    } )
-    // if ( cart_items.length > 1 ) {
-        cart_item.forEach( f => {
-            carts.push(f)
-            
-            
-    })
-    // }
-    
-//Toggle Modal
 
-const toggle = () => {
-setModal(!modal)
+export default class Chart extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+            modal: false,
+            backdrop: false,
+            
+        }
     }
 
     
-//Delete Item From chart
-const delItem = (id) => {
-// var rem1 = e.target.parentElement.parentElement.parentElement;
-    // rem1.remove()
-    props.deleteCart(id)    
-
-}
-
-    
-//Decrease Number of Goods
-const valueMinus = (e) => {
-var divUpd = e.target.nextElementSibling;
-var newVal = parseInt( divUpd.innerText, 10 ) - 1;
-if ( newVal >= 1 ) {
-    divUpd.innerText = newVal;
-   setQuantity(parseInt(newVal))
-}
-}
-   
-//Increase Number of Goods
-const valuePlus = (e) => {
-   
-    var divUpd = e.target.previousElementSibling;
-    
-    
-var newVal = parseInt( divUpd.innerText, 10 ) + 1;
-    divUpd.innerText = newVal;
-    setQuantity(parseInt(newVal))
-
-
-}
-
-    
-
   
+     
+    toggle = () => {
+         this.setState( {
+            modal: !this.state.modal
+        })
+            }
+    static propTypes = {
+        prop: PropTypes
+    }
 
+    
 
-return (
-<React.Fragment>
-    <NavLink onClick={toggle} href="#">
-        Cart({carts.length})
+    render() {
+        const { chartItems } = this.props;
+       
+        return (
+            <React.Fragment>
+    <NavLink onClick={this.toggle} href="#">
+        Cart[ {chartItems.length} ]
     </NavLink>
     
             <React.Fragment>
                  
-                <Modal isOpen={ modal } toggle={ toggle } backdrop={ backdrop }>
-                    <ModalHeader toggle={ toggle }>
+                <Modal isOpen={ this.state.modal } toggle={ this.toggle } backdrop={ this.state.backdrop }>
+                    <ModalHeader toggle={ this.toggle }>
                         Shopping Cart
                     </ModalHeader>
                 
                     <ModalBody>
+                   {chartItems.length === 0 ? 'Basket is Empty' : 
                     <Table responsive>
                    
-                        <thead >
-                            <tr>
-                                <th>Product Id</th>
-                                <th>Product Image</th>
-                                <th>Quantity</th>
-                                <th>Product Name</th>
-                                <th>Price</th>
-                                <th>Remove Item</th>
-    
-                            </tr>
-                        </thead>
-                        <tbody>
-                            { carts.map( ( { _id, item_name, price } ) => (
-                                <tr className="rem1">
-                               
-                                <td>{ _id }</td>
-                                <td>Not Available</td>
-    
-                                <td className="">
-                                   
-                                            <button className="btn btn-info sm"
-                                                onClick={ valueMinus }>-</button>
-                                            <div className="value">1</div>
-                                            <button className="btn btn-info sm"
-                                                onClick={ valuePlus }>+</button>
+                   <thead >
+                       <tr>
+                           <th>Product Id</th>
+                           <th>Product Image</th>
+                           <th>Quantity</th>
+                           <th>Product Name</th>
+                           <th>Price</th>
+                           <th>Remove Item</th>
+
+                       </tr>
+                   </thead>
+                   <tbody>
+                       { chartItems.map( ( item ) => (
+                           <tr className="rem1">
+                          
+                           <td>{ item.item_id }</td>
+                           <td>Not Available</td>
+
+                           <td className="">
+                              
+                                      
+                                       <div className="value">{item.count}</div>
                                        
-                                </td>
-                                <td>{ item_name }</td>
-                                <td>#{parseInt( 5000)  * quantity} </td>
-                                <td><div className="rem">
-                                    <button className="btn btn-danger sm"
-                                        onClick={ delItem.bind(this, _id) }> &times;</button>
-                                </div></td>
-                            </tr>
-                            ) )}
-                                
-                            
-                            
-    
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="4"><h3>Sum</h3></td>
-                                <td>$180</td>
-                                <td colspan="2"></td>
-                            </tr>
-                        </tfoot>
-                    </Table>
+                                  
+                           </td>
+                           <td>{ item.item_name }</td>
+                           <td>{util.formatCurrency(item.price * item.count)} </td>
+                           <td><div className="rem">
+                               <button className="btn btn-danger sm"
+                                   onClick={ (e)=>this.props.handleRemoveChart( e, item) }> &times;</button>
+                           </div></td>
+                       </tr>
+                       ) )}
+                           
+                       
+                       
+
+                   </tbody>
+                   <tfoot>
+                       <tr>
+                           <td colspan="4"><h3>Sum</h3></td>
+                           <td>{chartItems.reduce((a,c)=>a + c.price*c.count, 0)}</td>
+                           <td colspan="2"></td>
+                       </tr>
+                   </tfoot>
+               </Table> 
+               
+               }
                 </ModalBody>
               
                     
                 
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.toggle}>Continue Shopping</Button>{' '}
+                        
+                        {chartItems.length === 0 ?'' :
+                        <Link to={`/checkout/${chartItems.reduce((a,c)=>a + c.price*c.count, 0)}`}>
+                         <Button color="secondary" >Proceed to Checkout</Button> </Link>}
+                       
+                    </ModalFooter>
                     
                         
                 
-                    <ModalFooter>
-                        <Button color="primary" onClick={toggle}>Continue Shopping</Button>{' '}
-                        <Button color="secondary">Proceed to Checkout</Button>
-                    </ModalFooter>
                 </Modal>
                 </React.Fragment>
             
@@ -172,15 +132,9 @@ return (
        
 
 </React.Fragment>
-)
-
-
+        )
+    }
 }
 
 
 
-const mapStateToProps = (state) =>({
-    item: state.item,
-    cart: state.auth
-})
-export default connect(mapStateToProps,{deleteCart})(Chart);

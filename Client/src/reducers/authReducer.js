@@ -46,7 +46,7 @@ export default function (state = initialState, action) {
                 isAuthenticated: true,
                  isLoading: false,
                  isAdmin: action.payload.user.isAdmin,
-                 cart_item: action.payload.user.cart_items
+                 
                 
             };
         case AUTH_ERROR:

@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Container, Button,Table , FormText,Form, FormGroup, Label, Input, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap'
+import React, { useState,  } from 'react';
+import { Container, Button,Table , Form, FormGroup, Label, Input, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap'
 import classnames from 'classnames';
-import { addNewItem, deleteProduct, item, edit } from '../../actions/itemActions'
+import { addNewItem, deleteProduct, edit } from '../../actions/itemActions'
 import {connect} from 'react-redux';
-import PropTypes  from 'prop-types'
+import PropTypes from 'prop-types';
+import { useHistory } from "react-router-dom";
 
 export const AdminBoard = ( props ) => {
   const { loadedItem } = props.item1;
@@ -14,6 +15,7 @@ export const AdminBoard = ( props ) => {
     const [price, setPrice] = useState('')
     const [product_id, setProductId] = useState('')
     
+    const history = useHistory();
   AdminBoard.propTypes = {
     addNewItem: PropTypes.func.isRequired,
     deleteProduct: PropTypes.func.isRequired,
@@ -32,19 +34,15 @@ export const AdminBoard = ( props ) => {
             features,
             price
         }
-        props.addNewItem(newItem)
+      props.addNewItem( newItem )
+      history.push("/")
     }
     //On Form Product Delete
     const onProductDelete = ( e ) => {
         e.preventDefault()
         props.deleteProduct(product_id)
     }
-    //Load Edit Item
-
-    const loadItem = () => {
-        props.item(product_id)
-        
-  }
+   
   
  
   
@@ -164,4 +162,4 @@ const mapStateToProps = ( state ) => ({
    item1: state.item 
 })
 
-export default connect(mapStateToProps, {addNewItem, deleteProduct, item, edit})(AdminBoard)
+export default connect(mapStateToProps, {addNewItem, deleteProduct,  edit})(AdminBoard)

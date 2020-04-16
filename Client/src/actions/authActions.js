@@ -1,4 +1,5 @@
 import Axios from 'axios';
+
 import {
   USER_LOADED,
   USER_LOADING,
@@ -71,7 +72,7 @@ export const login = ( { email, password } ) => dispatch => {
             payload: res.data
         } ) )
         .catch( err => {
-            dispatch( returnErrors( err.response.data, err.response.status, 'LOGIN_FAIL' ) )
+            dispatch( returnErrors( err.data, err.status, 'LOGIN_FAIL' ) )
             dispatch( {
                 type: LOGIN_FAIL
             } )
@@ -81,10 +82,15 @@ export const login = ( { email, password } ) => dispatch => {
 //Logout
 
 export const logout = () => dispatch => {
+    
     Axios
         .get( 'api/user/logout' )
-        .then( res => dispatch( {
-        type: LOGOUT_SUCCESS
-    }))
+        .then( res => {
+            dispatch( {
+                type: LOGOUT_SUCCESS
+            } )
+        }
+            
+        )
 };
 

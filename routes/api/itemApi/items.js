@@ -60,13 +60,15 @@ router.delete('/delete/:id', redirectLogin, (req,res)=>{
    .catch( err => res.status(404).json({success: false}))
 });
 
-//@route EDIT api/items/edit/:id
+//@route GET api/items/:id
 //@desc  GET Items
 //@ccess  Private
 
-router.get( '/edit/:id', redirectLogin, ( req, res ) => {
-    Items.findOne( { item_id: req.params.id } )
-    .then(item => res.json(item))
+router.get( '/:id',  ( req, res ) => {
+    Items.findById(req.params.id)
+        .then( item => res.status( 200 ).json( item ) )
+    .catch(err => res.status(401).json(err))
+    
 })
 
 

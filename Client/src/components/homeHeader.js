@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import RegisterModal from './auth/RegisterModal'
 import LoginModal from './auth/LoginModal'
 import Logout from './auth/logout'
-import Chart from './chart'
+
 import {
     Collapse,
     Navbar,
@@ -12,10 +12,7 @@ import {
     Nav,
     NavLink,
     NavItem,
-    Container,
-    DropdownMenu,
-    DropdownItem,
-    ButtonDropdown
+    Container
 } from 'reactstrap';
 import { connect } from 'react-redux';
 
@@ -93,18 +90,16 @@ export class Homeheader extends Component {
 
                                 <NavItem>
                                     <NavLink>
-                                        <Link style={ { color: 'white', textDecoration: 'none' } }>Shop Now</Link>
+                                        <Link to="" style={ { color: 'white', textDecoration: 'none' } }>Shop Now</Link>
                                     </NavLink>
                                 </NavItem>
                                
                                 <NavItem>
                                     <NavLink>
-                                        <Link style={ { color: 'white', textDecoration: 'none' } }>Contact-Us</Link>
+                                        <Link to="" style={ { color: 'white', textDecoration: 'none' } }>Contact-Us</Link>
                                     </NavLink>
                                 </NavItem>
-                                <NavItem style={{float: 'right'}}>
-                                <Chart/>
-                            </NavItem>
+                                
                             </Nav>
                         </Collapse>
                     </Container>

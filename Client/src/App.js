@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import Homeheader from './components/homeHeader'
 import Banner from './components/Banner'
-import SubNavbar from './components/subNavbar'
+
 import Collections from './components/Collections'
 import AdminBoard from '../src/components/Admin/Admin'
-import Footer from './components/footer'
-import Chart from './components/chart'
 
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import ItemDetails from './components/ItemDetails'
+import Checkout from './components/Checkout'
+import { Switch, Route } from 'react-router-dom';
 import store from './store';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,28 +24,31 @@ export const App =()=> {
     
         return (
              <Provider store={store}>
-                <Router>
+                <Switch>
                     <React.Fragment>
                     
                     <Homeheader />
-                    <Route exact path="/" >
+                        <Route exact path="/" >
+                            
                         <Banner />
                        
                         <Collections />
                         
-                        <SubNavbar />
+                        
                         
                         
                     </Route>
                     <Route path="/admin" component={AdminBoard} />
+                    <Route path="/checkout/:total" component={Checkout} />
+                    <Route path="/item/details/:id" component={ItemDetails} />
 
 
 
 
                     
-                    <Footer />
+                    
                 </React.Fragment>
-                </Router>
+                </Switch>
                 </Provider>
         )
     
