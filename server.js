@@ -16,7 +16,7 @@ let db;
 if ( process.env.NODE_ENV !== 'production' ) {
   db = 'mongodb://localhost:process.env.27017/EcommerceDB';
 } else {
-  db;
+  db= process.env.MONGO_URL;
 }
 
 //Connect to MongoDB
@@ -66,6 +66,17 @@ const User = require('./routes/api/userApi/user')
 //ROUTES
 app.use('/api/items', items);
 app.use('/api/user', User);
+
+//serve static assests in production
+
+if(process.env.NODE_ENV === 'production'){
+    //set static
+    app.use(express.static('Client/build'));
+    app.get('*', (req,res)=>{
+        res.sendFile(path.resolve(__dirname, 'Client/build', 'index.html'));
+    })
+}
+
 
 //Catch all other route
 app.get("*", (req, res) => {
