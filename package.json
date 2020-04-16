@@ -56,7 +56,7 @@
   "devDependencies": {},
   "scripts": {
     "client-server": "npm i --prefix Client",
-    "start": "node sever.js",
+    "start": "nodemon server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix Client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
