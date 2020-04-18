@@ -14,7 +14,7 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../../actions/authActions';
+import { login , register} from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions'
 
 
@@ -48,7 +48,7 @@ export const LoginModal = ( props/*So as to access props */ ) => {
         const user = { email, password
         }
         props.login( user )
-        console.log(user)
+        
         
 
     }
@@ -110,6 +110,6 @@ const mapStateToProps = ( state ) => ( {
 
 
 export default connect( mapStateToProps, {
-    login, /*The function you are trying to call/ imported
+    login,register, /*The function you are trying to call/ imported
 Function*/clearErrors
 } )( LoginModal );

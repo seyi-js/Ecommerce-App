@@ -85,13 +85,7 @@ export const Collections = (props) =>{
 		})
 	}	
 
-const handleRemoveAllChart = (e)=>{
-	setChartItems(state=>{
-		const emptyChart = [];
-	localStorage.setItem('chartItems',JSON.stringify( emptyChart));
-	return emptyChart
-	})
-}
+
 	const handleAddToCart = (e, product) => {
 		setChartItems( state => {
 			const cartItems = chartItems;
@@ -122,7 +116,7 @@ const handleRemoveAllChart = (e)=>{
 						<Container className="text-center">
 						<button className="btn  " > <Chart handleRemoveChart={ handleRemoveChart}
 						
-						chartItems={ chartItems } removeAllChart={handleRemoveAllChart}/>
+						chartItems={ chartItems } />
 						</button>
 							<Row>
 								

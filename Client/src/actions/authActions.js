@@ -42,6 +42,10 @@ export const loadUser = () => ( dispatch, getState ) => {
         }
             );
 }
+
+
+
+
 //Register User
 export const register = ( { name, email, password, password2 } ) => dispatch => {
    
@@ -62,23 +66,26 @@ export const register = ( { name, email, password, password2 } ) => dispatch => 
         } )
 };
 
-//Login
+
+//Login User
 export const login = ( { email, password } ) => dispatch => {
-    const body = JSON.stringify( { email, password } )
+   
+
+    const body = JSON.stringify( { email, password } );
+
     Axios
-        .post( 'api/user/login', body, config)
+        .post( 'api/user/login', body, config )
         .then( res => dispatch( {
             type: LOGIN_SUCCESS,
             payload: res.data
         } ) )
         .catch( err => {
-            dispatch( returnErrors( err.data, err.status, 'LOGIN_FAIL' ) )
+            dispatch( returnErrors( err.response.data, err.response.status, 'LOGIN_FAIL' ) )
             dispatch( {
                 type: LOGIN_FAIL
             } )
         } )
 };
-
 //Logout
 
 export const logout = () => dispatch => {

@@ -47,7 +47,7 @@ export default class Chart extends Component {
         return (
             <React.Fragment>
     <NavLink onClick={this.toggle} href="#">
-        Cart[ {chartItems.length} ]
+        Cart
     </NavLink>
     
             <React.Fragment>
