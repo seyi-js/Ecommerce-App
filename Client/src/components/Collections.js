@@ -127,7 +127,7 @@ export const Collections = (props) =>{
 
 
 									<Link to={`/item/details/${item._id}`}>
-												{ item.item_image ? <img src={ `/uploads/${item.item_image}` } className="img-responsive" />: <img src='../images/10.jpg' className="img-responsive" /> }
+												{ item.item_image ? <img src={ `./uploads/${item.item_image}` } className="img-responsive" />: <img src='../images/10.jpg' className="img-responsive" /> }
 									
 									</Link>
 									<h3>{ item.item_name }</h3>
