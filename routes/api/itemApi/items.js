@@ -3,9 +3,13 @@ const router = express.Router();
 const Items = require( '../../../Models/itemModels/item' );
 const { findById, redirectLogin } = require( '../../../middleware/auth' );
 const multer = require( 'multer' )
-const upload = multer({dest: `${__dirname}/../../../Client/public/uploads`});
+let upload;
 
-
+if ( process.env.NODE_ENV === production ) {
+    upload = multer({dest: `${__dirname}/../../../Client/build/public/uploads`});
+} else {
+    upload = multer({dest: `${__dirname}/../../../Client/public/uploads`});
+}
 
 
 
