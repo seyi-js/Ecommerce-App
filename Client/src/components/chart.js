@@ -102,7 +102,7 @@ export default class Chart extends Component {
                    <tfoot>
                        <tr>
                            <td colspan="4"><h3>Sum</h3></td>
-                           <td>{chartItems.reduce((a,c)=>a + c.price*c.count, 0)}</td>
+                           <td>{util.formatCurrency(chartItems.reduce((a,c)=>a + c.price*c.count, 0))}</td>
                            <td colspan="2"></td>
                        </tr>
                    </tfoot>

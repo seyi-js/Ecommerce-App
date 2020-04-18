@@ -11,14 +11,15 @@ export function Banner() {
 
 
     return (
-        <Container className="mb-10">
+        <Container className="mb-10" style={{maxWidth: '700px'}}>
 
             <Carousel activeIndex={ index } onSelect={ handleSelect } >
                 <Carousel.Item >
                     <img
-                        className="d-block w-100"
-                        src="../images/5.jpg"
+                        className="d-block w-100 img-responsive"
+                        src="../images/Huawei-P20-pro.jpg"
                         alt="First slide"
+                        
                     />
                     <Carousel.Caption>
                         <h3>First slide label</h3>
@@ -27,9 +28,10 @@ export function Banner() {
                 </Carousel.Item>
                 <Carousel.Item  >
                     <img
-                        className="d-block w-100"
-                        src="../images/1.jpg"
+                        className="d-block w-100 img-responsive"
+                        src="../images/Pixel-2-XL-front-diagonal.jpg"
                         alt="Second slide"
+                        
 
                     />
 
@@ -40,8 +42,8 @@ export function Banner() {
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
-                        className="d-block w-100"
-                        src="../images/5.jpg"
+                        className="d-block w-100 img-responsive"
+                        src="../images/Samsung-Galaxy-Note-9.jpg"
                         alt="Third slide"
                     />
 
