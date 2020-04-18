@@ -5,7 +5,7 @@ const { findById, redirectLogin } = require( '../../../middleware/auth' );
 const multer = require( 'multer' )
 let upload;
 
-if ( process.env.NODE_ENV === production ) {
+if ( process.env.NODE_ENV === "production" ) {
     upload = multer({dest: `${__dirname}/../../../Client/build/public/uploads`});
 } else {
     upload = multer({dest: `${__dirname}/../../../Client/public/uploads`});
