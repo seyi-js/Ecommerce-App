@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Items = require( '../../../Models/itemModels/item' );
-const {findById, redirectLogin} = require('../../../middleware/auth')
+const { findById, redirectLogin } = require( '../../../middleware/auth' );
+const multer = require( 'multer' )
+const upload = multer({dest: `${__dirname}/../../../Client/public/uploads`});
 
 
 
@@ -29,7 +31,7 @@ router.get('/', (req,res)=>{
 //@desc  Create Items
 //@ccess  Private
 
-router.post( '/post',redirectLogin, findById, ( req, res ) => {
+router.post( '/post',redirectLogin, findById,upload.single( "file" ), ( req, res ) => {
     var id = ''+Math.floor((Math.random() * 1000000000) + 1)
     const newItem = new Items( {
         item_id : id,
@@ -38,9 +40,10 @@ router.post( '/post',redirectLogin, findById, ( req, res ) => {
         description: req.body.description,
         features: req.body.features,
         posted_by: userdata.email,
+        item_image: req.file.filename
 
-    })
-
+    } )
+    
     Items.create(newItem)
     .then(item => res.json(item))
     .catch(err => console.log(err));

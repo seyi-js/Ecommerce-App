@@ -96,7 +96,7 @@ export class Homeheader extends Component {
                                
                                 <NavItem>
                                     <NavLink>
-                                        <Link to="" style={ { color: 'white', textDecoration: 'none' } }>Contact-Us</Link>
+                                        <a href="https://github.com/seyi-js/Ecommerce-App/" target="_blank" style={ { color: 'white', textDecoration: 'none' } }><i className="fab fa-github"></i> GitHub </a>
                                     </NavLink>
                                 </NavItem>
                                 

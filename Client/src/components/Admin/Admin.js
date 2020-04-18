@@ -14,6 +14,8 @@ export const AdminBoard = ( props ) => {
     const [features, setFeatures] = useState('')
     const [price, setPrice] = useState('')
     const [product_id, setProductId] = useState('')
+  const [ filename, setFilename ] = useState( 'Choose Product Image' );
+  const [file, setFile] =useState({})
     
     const history = useHistory();
   AdminBoard.propTypes = {
@@ -32,7 +34,8 @@ export const AdminBoard = ( props ) => {
             item_name,
             description,
             features,
-            price
+          price,
+            file
         }
       props.addNewItem( newItem )
       history.push("/")
@@ -43,7 +46,10 @@ export const AdminBoard = ( props ) => {
         props.deleteProduct(product_id)
     }
    
-  
+    const onChange = e => {
+      setFile(e.target.files[0])
+      setFilename(e.target.files[0].name)
+  }
  
   
   
@@ -68,7 +74,7 @@ export const AdminBoard = ( props ) => {
               className={classnames({ active: activeTab === '2' })}
               onClick={() => { toggle('2'); }}
             >
-              Edit/Delete Product
+              Delete Product
             </NavLink>
           </NavItem>
           <NavItem>
@@ -102,8 +108,10 @@ export const AdminBoard = ( props ) => {
                       onChange={e => setFeatures(e.target.value) }></Input>
                   </FormGroup>
                   <FormGroup>
-                      <Label>Product Images</Label>
-                      <Input type="file" name="item_images"></Input>
+                  <div className="custom-file mb-4">
+                        <input type="file" className="custom-file-input" id="customFile" onChange={ onChange}/>
+                        <label className="custom-file-label" htmlFor="customFile">{ filename}</label>
+                      </div>
                   </FormGroup>
                   <FormGroup>
                       <Label>Price</Label>

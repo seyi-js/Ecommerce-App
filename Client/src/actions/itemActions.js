@@ -75,10 +75,24 @@ export const edit = ( {id, item_name, description,features, price} ) => {
 }
 //Add New Product
 
-export const addNewItem = ( { item_name, description, features, price } ) => dispatch => {
-    const body = JSON.stringify({ item_name, description, features, price})
+export const addNewItem = ( { item_name, description, features, price ,file} ) => dispatch => {
+
+    const configure = {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    }
+    const body = JSON.stringify( { item_name, description, features, price } )
+    // console.log(body)
+    const formData = new FormData();
+    formData.append( 'file', file );
+    formData.append( 'price', price );
+    formData.append( 'item_name', item_name );
+    formData.append( 'description', description );
+    formData.append( 'features', features);
+    
     Axios
-        .post( 'api/items/post', body, config )
+        .post( 'api/items/post',formData, configure )
     .then(res => dispatch({
         type: ADD_ITEM,
         payload:res.data

@@ -127,11 +127,11 @@ export const Collections = (props) =>{
 
 
 									<Link to={`/item/details/${item._id}`}>
-									<img src='../images/10.jpg' className="img-responsive" />
+												{ item.item_image ? <img src={ `/uploads/${item.item_image}` } className="img-responsive" />: <img src='../images/10.jpg' className="img-responsive" /> }
+									
 									</Link>
 									<h3>{ item.item_name }</h3>
 												<h4>{ util.formatCurrency( parseInt(item.price)) }</h4>
-									<p>Posted by { item.posted_by }</p>
 									
 									<button className="btn btn-info text-center" onClick={(e)=>{handleAddToCart(e, item)}}>Add To Cart</button>	
 
