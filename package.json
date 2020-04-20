@@ -26,6 +26,7 @@
     "forever": "^2.0.0",
     "forever-monitor": "^2.0.0",
     "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
     "gulp": "4.0.2",
     "gulp-autoprefixer": "7.0.0",
     "gulp-clean-css": "4.2.0",
@@ -59,8 +60,8 @@
     "start": "nodemon server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix Client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
-    
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install  --prefix Client && npm run build --prefix Client"
   },
   "author": "ADEBAYO SAMUEL OLUWASEYI",
   "license": "MIT",

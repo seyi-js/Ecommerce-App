@@ -4,7 +4,7 @@ const Items = require( '../../../Models/itemModels/item' );
 const { findById, redirectLogin } = require( '../../../middleware/auth' );
 const multer = require( 'multer' )
 let upload;
-
+const fs = require('fs')
 if ( process.env.NODE_ENV === "production" ) {
     upload = multer({dest: `${__dirname}/../../../Client/build/uploads`});
 } else {
@@ -37,6 +37,8 @@ router.get('/', (req,res)=>{
 
 router.post( '/post',redirectLogin, findById,upload.single( "file" ), ( req, res ) => {
     var id = ''+Math.floor((Math.random() * 1000000000) + 1)
+    let buff = fs.readFileSync(req.file.path);
+    let base64data = buff.toString('base64');
     const newItem = new Items( {
         item_id : id,
         item_name: req.body.item_name,
@@ -44,12 +46,23 @@ router.post( '/post',redirectLogin, findById,upload.single( "file" ), ( req, res
         description: req.body.description,
         features: req.body.features,
         posted_by: userdata.email,
-        item_image: req.file.filename
+        item_image: base64data
 
     } )
-    
+    // console.log(req.file)
     Items.create(newItem)
-    .then(item => res.json(item))
+        .then( item => {
+            item.item_image.data = base64data;
+            item.item_image.contenType = req.file.mimetype;
+            item.save( ( err, item ) => {
+                if ( err ) {
+                    console.log(err)
+                } else {
+                    res.json(item)
+                }
+            })
+            
+    })
     .catch(err => console.log(err));
 });
 

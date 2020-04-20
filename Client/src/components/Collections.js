@@ -2,7 +2,7 @@ import React, {useState, useEffect } from 'react';
 import { getItems, addToCart } from '../actions/itemActions';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { Container, Row, Col, Spinner } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { Link,  } from 'react-router-dom';
 import util from './utils';
 import Axios from 'axios'
@@ -15,7 +15,8 @@ export const Collections = (props) =>{
 	const [ sort, setSort ] = useState('');
 	const [ items, setItems ] = useState( '' );
 	const [ filteredItem, setFilteredItems ] = useState([]);
-	const [ chartItems, setChartItems ] = useState([]);
+	const [ chartItems, setChartItems ] = useState( [] );
+
 	//Proptypes
 	Collections.propTypes = {
 	getItems: propTypes.func.isRequired
@@ -105,7 +106,21 @@ export const Collections = (props) =>{
 		})
 	}
 			
-
+ 
+    const getImg = (img) => {
+        const byteCharacters = atob(img);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        
+		let image = new Blob( [ byteArray ], { type: 'image/jpeg' } );
+		// setImageUrl( URL.createObjectURL( image ) )
+		const url =  URL.createObjectURL( image )
+		return url
+            
+     }
 			
 		
 
@@ -124,10 +139,10 @@ export const Collections = (props) =>{
 
 								<Col key={item._id}>
 								<div className="" >
-
+									{}
 
 									<Link to={`/item/details/${item._id}`}>
-												{ item.item_image ? <img src={ `/uploads/${item.item_image}` } className="img-responsive" />: <img src='../images/10.jpg' className="img-responsive" /> }
+												{ item.item_image ? <img src={getImg(item.item_image.data)} className="img-responsive" />: <img src='../images/index.png' className="img-responsive" /> }
 									
 									</Link>
 									<h3>{ item.item_name }</h3>

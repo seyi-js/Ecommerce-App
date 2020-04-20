@@ -14,7 +14,8 @@ const itemSchema = new mongoose.Schema( {
         required: true
     },
     item_image: {
-        type: String
+        data: String,
+        contentType: String
     },
     description: {
         type:String
