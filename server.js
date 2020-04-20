@@ -9,7 +9,6 @@ const cookieParser = require('cookie-parser');
 const expressLayouts = require( 'express-ejs-layouts' );
 const MongoStore = require( 'connect-mongo' )( session );
 mongoose.set('useCreateIndex', true);
-var paystack = require("paystack-api")("sk_test_1929b5c17dc229cb0f58b21523d007e61b23e1ea");
 let db;
 
 //switch btw production and dev
