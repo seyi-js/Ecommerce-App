@@ -35,7 +35,8 @@ export default function (state = initialState, action) {
                 isAuthenticated: true,
                 isLoading: false,
                 user: action.payload,
-                cart_item: action.payload.cart_items
+                cart_item: action.payload.cart_items,
+                isAdmin: action.payload.isAdmin,
             };
        case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
@@ -59,7 +60,8 @@ export default function (state = initialState, action) {
                 token: null,
                 user: null,
                 isAuthenticated: false,
-                isLoading: false
+                isLoading: false,
+                isAdmin: false
             };
             case DELETE_CART:
                 return {

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Items = require( '../../../Models/itemModels/item' );
-const { findById, redirectLogin } = require( '../../../middleware/auth' );
+const { findById, redirectLogin, isAdmin } = require( '../../../middleware/auth' );
 const multer = require( 'multer' )
 let upload;
 const fs = require('fs')
@@ -35,7 +35,7 @@ router.get('/', (req,res)=>{
 //@desc  Create Items
 //@ccess  Private
 
-router.post( '/post',redirectLogin, findById,upload.single( "file" ), ( req, res ) => {
+router.post( '/post',redirectLogin,isAdmin, findById,upload.single( "file" ), ( req, res ) => {
     var id = ''+Math.floor((Math.random() * 1000000000) + 1)
     let buff = fs.readFileSync(req.file.path);
     let base64data = buff.toString('base64');
@@ -70,7 +70,7 @@ router.post( '/post',redirectLogin, findById,upload.single( "file" ), ( req, res
 //@desc  DELETE Items
 //@ccess  Private
 
-router.delete('/delete/:id', redirectLogin, (req,res)=>{
+router.delete('/delete/:id', redirectLogin,isAdmin, (req,res)=>{
    Items.findOne({item_id: req.params.id})
    .then(item => {
        item.remove(),
@@ -96,7 +96,7 @@ router.get( '/:id',  ( req, res ) => {
 //@desc  POST Items
 //@ccess  Private
 
-router.post( '/edit/:id', redirectLogin, ( req, res ) => {
+router.post( '/edit/:id', redirectLogin,isAdmin, ( req, res ) => {
     let itemname = ''
     let itemprice = ''
     let itemdescription = ''

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import RegisterModal from './auth/RegisterModal'
 import LoginModal from './auth/LoginModal'
 import Logout from './auth/logout'
+import AdminBoard from './Admin/Admin'
+import {Route} from 'react-router-dom'
 
 import {
     Collapse,
@@ -35,7 +37,17 @@ export class Homeheader extends Component {
     }
 
     render() {
-        const { isAuthenticated, user } = this.props.auth;
+        const { isAuthenticated, user, isAdmin } = this.props.auth;
+
+        const Admin = (
+            <React.Fragment>
+            <NavItem>
+            <NavLink>
+                <Link to='/admin' style={ { color: 'white', textDecoration: 'none' } }>AdminBoard</Link>
+            </NavLink>
+        </NavItem>
+            </React.Fragment>
+        )
 
         const authLinks = (
             <React.Fragment>
@@ -67,6 +79,7 @@ export class Homeheader extends Component {
 )
         return (
             <React.Fragment>
+        
                 <Navbar color="dark" dark expand="sm" className="mb-5 bg-blue">
                     <Container fluid={true}>
                         <NavbarBrand href='/'>Shopify
@@ -80,11 +93,7 @@ export class Homeheader extends Component {
                                         <Link to='/' style={ { color: 'white', textDecoration: 'none' } }>Home</Link>
                                     </NavLink>
                                 </NavItem>
-                                <NavItem>
-                                    <NavLink>
-                                        <Link to='/admin' style={ { color: 'white', textDecoration: 'none' } }>AdminBoard</Link>
-                                    </NavLink>
-                                </NavItem>
+                                {(isAuthenticated && isAdmin)? Admin : null}
 
                                 { isAuthenticated ? authLinks : visitorsLinks }
 
@@ -104,7 +113,9 @@ export class Homeheader extends Component {
                         </Collapse>
                     </Container>
                 </Navbar>
-
+                { ( isAuthenticated && isAdmin ) ? <Route path="/admin" component={ AdminBoard } /> : 
+                ''
+         }
             </React.Fragment>
         )
 

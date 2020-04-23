@@ -32,7 +32,20 @@ const User = require('../Models/userModels/user');
       });
   };
 
-module.exports = {redirectLogin, findById, redirectHome};
+//Is Admin
+
+const isAdmin = ( req, res, next ) => {
+  var { userId } = req.session;
+  User.findById( userId )
+    .then( user => {
+      if ( user.isAdmin ) {
+      next()
+      } else {
+        res.status(401).json({msg: 'Authorization Denied'});
+    }
+  })
+}
+module.exports = {redirectLogin, findById, redirectHome, isAdmin};
 
 
 

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require( '../../../Models/userModels/user' )
 const bcrypt = require( "bcryptjs" );
-const { redirectLogin, findById } = require( '../../../middleware/auth' );
+const { redirectLogin, findById} = require( '../../../middleware/auth' );
 const Items = require( '../../../Models/itemModels/item' )
 
 
