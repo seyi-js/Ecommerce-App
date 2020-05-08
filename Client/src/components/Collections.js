@@ -107,20 +107,7 @@ export const Collections = (props) =>{
 	}
 			
  
-    const getImg = (img) => {
-        const byteCharacters = atob(img);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        
-		let image = new Blob( [ byteArray ], { type: 'image/jpeg' } );
-		// setImageUrl( URL.createObjectURL( image ) )
-		const url =  URL.createObjectURL( image )
-		return url
-            
-     }
+	const { isAuthenticated } = props;
 			
 		
 
@@ -131,7 +118,7 @@ export const Collections = (props) =>{
 						<Container className="text-center">
 						<button className="btn  " > <Chart handleRemoveChart={ handleRemoveChart}
 						
-						chartItems={ chartItems } />
+						chartItems={ chartItems } isAuthenticated={isAuthenticated} />
 						</button>
 							<Row>
 								
@@ -142,7 +129,7 @@ export const Collections = (props) =>{
 									{}
 
 									<Link to={`/item/details/${item._id}`}>
-												{ item.item_image ? <img src={getImg(item.item_image.data)} className="img-responsive" />: <img src='../images/index.png' className="img-responsive" /> }
+												{ item.item_image ? <img src={util.getImg(item.item_image.data)} className="img-responsive" />: <img src='../images/index.png' className="img-responsive" /> }
 									
 									</Link>
 									<h3>{ item.item_name }</h3>
@@ -188,7 +175,8 @@ export const Collections = (props) =>{
 			
 
 			const mapStateToProps = (state) =>({
-			item: state.item,
+				item: state.item,
+				isAuthenticated: state.auth.isAuthenticated
 			})
 
 			export default connect(mapStateToProps, {getItems, addToCart})(Collections);

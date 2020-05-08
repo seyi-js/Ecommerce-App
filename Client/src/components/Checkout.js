@@ -3,6 +3,7 @@ import {Form, FormGroup,Input,Label, FormText,Button, Container} from 'reactstra
 import PayStack from './PayStack';
 import util from './utils';
 
+
 export class Checkout extends Component {
 
     constructor(props) {
@@ -22,7 +23,7 @@ export class Checkout extends Component {
         const amount = Number(this.props.match.params.total)
 
         console.log(amount + 0 + 0)
-        console.log(this.state)
+        // console.log(this.state)
     }
     render() {
         return (

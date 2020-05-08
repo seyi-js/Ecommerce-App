@@ -1,0 +1,23 @@
+
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui.scss";
+
+// Temp fix for reactstrap
+@import '~@coreui/coreui/scss/_dropdown-menu-right.scss';
+
+// If you want to add something do it here
+
+
+// ie fixes
+html body .app.flex-row.align-items-center {
+    height: 100vh;
+  }
+  
+  // ie11 floating footer temp fix, react only
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    #root {
+      display: flex;
+      flex-direction: column;
+    }
+  }

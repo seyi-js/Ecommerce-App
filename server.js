@@ -78,9 +78,9 @@ if(process.env.NODE_ENV === 'production'){
 
 
 //Catch all other route
-app.get("*", (req, res) => {
-    res.send("<h1>error 404 Page not Found</h1>");
-});
+// app.get("*", (req, res) => {
+//     res.send("<h1>error 404 Page not Found</h1>");
+// });
 
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));

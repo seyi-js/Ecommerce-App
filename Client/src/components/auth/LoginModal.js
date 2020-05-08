@@ -82,7 +82,7 @@ export const LoginModal = ( props/*So as to access props */ ) => {
                 </ModalHeader>
                 <ModalBody>
                     { message ? <Alert color="danger">{ message }</Alert> : null }
-                    <Form onSubmit={ onSubmit }>
+                    <Form onSubmit={e=> onSubmit(e) }>
                         <FormGroup>
                             
                             <Label for="email">Email</Label>

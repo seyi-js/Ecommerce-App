@@ -13,7 +13,7 @@ Table
 import React, { Component, browserHistory } from 'react'
 import PropTypes from 'prop-types'
 import util from './utils';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 export default class Chart extends Component {
@@ -42,7 +42,7 @@ export default class Chart extends Component {
     
 
     render() {
-        const { chartItems } = this.props;
+        const { chartItems, isAuthenticated} = this.props;
        
         return (
             <React.Fragment>
@@ -116,9 +116,9 @@ export default class Chart extends Component {
                     <ModalFooter>
                         <Button color="primary" onClick={this.toggle}>Continue Shopping</Button>{' '}
                         
-                        {chartItems.length === 0 ?'' :
+                        {(chartItems.length !== 0 && isAuthenticated) ?
                         <Link to={`/checkout/${chartItems.reduce((a,c)=>a + c.price*c.count, 0)}`}>
-                         <Button color="secondary" >Proceed to Checkout</Button> </Link>}
+                         <Button color="secondary" >Proceed to Checkout</Button> </Link>: ''}
                        
                     </ModalFooter>
                     

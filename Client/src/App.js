@@ -1,10 +1,9 @@
 import React, { useEffect, useHistory } from 'react';
 import Homeheader from './components/homeHeader'
 import Banner from './components/Banner'
-
+// import './App.scss'
+import Home from './components/Admin/Dashboard/Home'
 import Collections from './components/Collections'
-import AdminBoard from '../src/components/Admin/Admin'
-
 import ItemDetails from './components/ItemDetails'
 import Checkout from './components/Checkout'
 import { Switch, Route } from 'react-router-dom';
@@ -29,9 +28,9 @@ export const App =()=> {
                 <Switch>
                     <React.Fragment>
                     
-                    <Homeheader />
+                   
                         <Route exact path="/" >
-                            
+                        <Homeheader />
                         <Banner />
                        
                         <Collections />
@@ -41,7 +40,9 @@ export const App =()=> {
                         
                     </Route>
                         
-                    
+                       
+                        <Route exact path="/dashboard" component={Home}/>
+                         
                     <Route path="/checkout/:total" component={Checkout} />
                     <Route path="/item/details/:id" component={ItemDetails} />
 
