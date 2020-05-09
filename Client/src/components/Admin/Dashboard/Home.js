@@ -3,6 +3,7 @@ import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
 import { Container, Card, CardBody, CardColumns, CardHeader, Row, Col } from 'reactstrap';
 import PeopleIcon from '@material-ui/icons/People';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import Footer from './Footer'
 // import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import Layout from './Layout'
 import PersonIcon from '@material-ui/icons/Person';
@@ -140,6 +141,7 @@ export const Home = () => {
                 </Card>
                 </CardColumns>
                 </Container>
+                <Footer/>
         </React.Fragment>
     )
 }

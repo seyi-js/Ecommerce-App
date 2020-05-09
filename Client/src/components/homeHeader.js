@@ -80,7 +80,7 @@ export class Homeheader extends Component {
         return (
             <React.Fragment>
         
-                <Navbar color="dark" dark expand="sm" className="mb-5 bg-blue">
+                <Navbar  dark expand="sm" className="mb-5 bg-info">
                     <Container fluid={true}>
                         <NavbarBrand href='/'>Shopify
             </NavbarBrand>

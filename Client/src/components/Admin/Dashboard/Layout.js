@@ -1,6 +1,7 @@
 import React from 'react'
 import clsx from 'clsx';
-import {Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,6 +9,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import EditIcon from '@material-ui/icons/Edit';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -22,6 +27,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Orders from '@material-ui/icons/DirectionsBikeRounded';
 import Add from '@material-ui/icons/AddBox';
+import Footer from './Footer'
 
 const drawerWidth = 240;
 
@@ -87,7 +93,7 @@ const Layout = ( props ) => {
     const classes = useStyles();
     const theme = useTheme();
     const [ open, setOpen ] = React.useState( false );
-
+    const [ anchorEl, setAnchorEl ] = React.useState( null );
     const handleDrawerOpen = () => {
         setOpen( true );
     };
@@ -95,10 +101,16 @@ const Layout = ( props ) => {
     const handleDrawerClose = () => {
         setOpen( false );
     };
-  
+    const handleClick = ( event ) => {
+        setAnchorEl( event.currentTarget );
+    };
+
+    const handleClose = () => {
+        setAnchorEl( null );
+    };
     return (
         <React.Fragment>
-           
+
             <div className={ classes.root }>
                 <CssBaseline />
                 <AppBar
@@ -106,7 +118,7 @@ const Layout = ( props ) => {
                     className={ clsx( classes.appBar, {
                         [ classes.appBarShift ]: open,
                     } ) }
-               className="bg-info" >
+                    className="bg-info" >
                     <Toolbar>
                         <IconButton
                             color="inherit"
@@ -118,12 +130,12 @@ const Layout = ( props ) => {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap>
-                           <DashboardIcon/> {' '} Dashboard
+                            <DashboardIcon /> { ' ' } Dashboard
                         </Typography>
                     </Toolbar>
                 </AppBar>
                 <Drawer
-                    
+
                     className={ classes.drawer }
                     variant="persistent"
                     anchor="left"
@@ -139,33 +151,56 @@ const Layout = ( props ) => {
                     </div>
                     <Divider />
                     <List className="bg-info">
-                        
-                        <ListItem button >
-                        <ListItemIcon> <HomeIcon /></ListItemIcon>
-                            <ListItemText><Link to="/dashboard" style={{color: 'White', textDecoration: 'none'}}>Dashboard</Link></ListItemText>
+                        <Link to="/dashboard" style={ getStyle }>
+                            <ListItem button >
+                                <ListItemIcon> <HomeIcon /></ListItemIcon>
+                                <ListItemText>Dashboard</ListItemText>
+                            </ListItem>
+                        </Link>
+                        <ListItem button>
+                            <ListItemIcon> <Orders /></ListItemIcon>
+                            <ListItemText><Link to="" style={ getStyle }>Orders</Link></ListItemText>
                         </ListItem>
                         <ListItem button>
-                        <ListItemIcon> <Orders/></ListItemIcon>
-                            <ListItemText><Link to="">Orders</Link></ListItemText>
+                            <ListItemIcon> <AccountBalance /></ListItemIcon>
+                            <ListItemText><Link to="" style={ getStyle }>Manage Account</Link></ListItemText>
+
                         </ListItem>
+                        <Link to="/manageproduct" style={ getStyle }>
+                            <ListItem button>
+                                <ListItemIcon> <Add /></ListItemIcon>
+                                <ListItemText>Add Product</ListItemText>
+                            </ListItem>
+                        </Link>
                         <ListItem button>
-                        <ListItemIcon> <AccountBalance /></ListItemIcon>
-                            <ListItemText><Link to="">Account</Link></ListItemText>
+                        <ListItemIcon> <EditIcon/></ListItemIcon>
+                        <ListItemText onClick={handleClick}>Manage Products</ListItemText>
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={ anchorEl }
+                                keepMounted
+                                open={ Boolean( anchorEl ) }
+                                onClose={ handleClose }
+                                
+                            >
+                            
+                                <MenuItem onClick={ handleClose }>Delete Product</MenuItem>
+                                <MenuItem onClick={ handleClose }>Edit Product</MenuItem>
+                               
+                            </Menu>
                         </ListItem>
-                        <ListItem button>
-                        <ListItemIcon> <Add/></ListItemIcon>
-                            <ListItemText><Link to="">Post Product</Link></ListItemText>
-                        </ListItem>
+
                     </List>
                     <Divider />
                     <List className="bg-info">
                         { [ 'Settings' ].map( ( text, index ) => (
                             <ListItem button key={ text }>
-                                <ListItemIcon>{ index  === 0 ? <SettingsIcon /> : '' }</ListItemIcon>
+                                <ListItemIcon>{ index === 0 ? <SettingsIcon /> : '' }</ListItemIcon>
                                 <ListItemText primary={ text } />
                             </ListItem>
                         ) ) }
                     </List>
+                    <Footer />
                 </Drawer>
                 <main
                     className={ clsx( classes.content, {
@@ -173,13 +208,9 @@ const Layout = ( props ) => {
                     } ) }
                 >
                     <div className={ classes.drawerHeader } />
-                    
-                    <Typography >
-                        
-                        
-                        
-                    </Typography>
-                   
+
+
+
                 </main>
             </div>
 
@@ -188,5 +219,10 @@ const Layout = ( props ) => {
     )
 }
 
+const getStyle = {
 
+    color: 'White',
+    textDecoration: 'none'
+
+}
 export default Layout
