@@ -3,13 +3,10 @@ import { Container, Button, Form, FormGroup, Label, Input, InputGroup,
     InputGroupAddon,
     FormText,
     InputGroupText } from 'reactstrap';
-import Layout from './Layout'
-import Footer from './Footer'
 import CKEditor from 'ckeditor4-react';
 import { makeStyles } from '@material-ui/core/styles';
 import Buton from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,7 +27,6 @@ export const AddProduct = () => {
     const [ features4, setFeatures4 ] = useState( '' )
     const [ features5, setFeatures5 ] = useState( '' )
     const [ price, setPrice ] = useState( '' )
-    const [ product_id, setProductId ] = useState( '' )
     const [ filename, setFilename ] = useState( 'Choose Product Image' );
     const [ file, setFile ] = useState( {} )
 
@@ -62,10 +58,11 @@ export const AddProduct = () => {
         setDescription( data)
         }
         const classes = useStyles();
-   
+
+ 
     return (
         <React.Fragment>
-            <Layout />
+            
             <Container style={{marginBottom: '100px'}}>
                 <Form onSubmit={ onSubmitAddNewItem } >
                     <FormGroup>
@@ -150,7 +147,7 @@ export const AddProduct = () => {
 
                 </Form>
             </Container >
-           <Footer/>
+           
         </React.Fragment>
     )
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import clsx from 'clsx';
-import { Link } from 'react-router-dom'
-
+import Edit from './ManageProduct/Edit'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +8,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import EditIcon from '@material-ui/icons/Edit';
@@ -23,12 +21,20 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import AccountBalance from '@material-ui/icons/AccountBalanceWallet';
-import DashboardIcon from '@material-ui/icons/Dashboard';
+import DashboardIcon from '@material-ui/icons/Dashboard'
 import SettingsIcon from '@material-ui/icons/Settings';
 import Orders from '@material-ui/icons/DirectionsBikeRounded';
 import Add from '@material-ui/icons/AddBox';
 import Footer from './Footer'
-
+import Logout from './Logout'
+import Home from './Home'
+import AddProduct from './AddProduct'
+import Delete from './ManageProduct/Delete'
+import Order from './Order'
+import Verification from './ManageAccount/Verification'
+import ListTransactions from './ManageAccount/Transactions/ListTransactions';
+import Refund from './ManageAccount/Refund'
+import Customers from './ManageAccount/Customers'
 const drawerWidth = 240;
 
 const useStyles = makeStyles( ( theme ) => ( {
@@ -93,7 +99,10 @@ const Layout = ( props ) => {
     const classes = useStyles();
     const theme = useTheme();
     const [ open, setOpen ] = React.useState( false );
+    const [ anchorEl2, setAnchorEl2 ] = React.useState( null );
     const [ anchorEl, setAnchorEl ] = React.useState( null );
+    
+    const [ toggle, setToggle ] = React.useState( 7 )
     const handleDrawerOpen = () => {
         setOpen( true );
     };
@@ -105,9 +114,30 @@ const Layout = ( props ) => {
         setAnchorEl( event.currentTarget );
     };
 
-    const handleClose = () => {
-        setAnchorEl( null );
+    const handleClickAccount = ( event ) => {
+        setAnchorEl2( event.currentTarget );
     };
+
+  
+
+    const handleClose = () => {
+
+        setAnchorEl( null );
+        setAnchorEl2( null );
+        setOpen( false );
+    };
+
+
+    const handleCloseD = ( num ) => {
+        setAnchorEl2( null );
+        setAnchorEl( null );
+        setToggle( num )
+        setOpen( false );
+        
+    };
+
+   
+
     return (
         <React.Fragment>
 
@@ -151,42 +181,58 @@ const Layout = ( props ) => {
                     </div>
                     <Divider />
                     <List className="bg-info">
-                        <Link to="/dashboard" style={ getStyle }>
-                            <ListItem button >
-                                <ListItemIcon> <HomeIcon /></ListItemIcon>
-                                <ListItemText>Dashboard</ListItemText>
-                            </ListItem>
-                        </Link>
-                        <ListItem button>
-                            <ListItemIcon> <Orders /></ListItemIcon>
-                            <ListItemText><Link to="" style={ getStyle }>Orders</Link></ListItemText>
+
+                        <ListItem button onClick={ () => setToggle( 1 ) }>
+                            <ListItemIcon> <HomeIcon /></ListItemIcon>
+                            <ListItemText >Dashboard</ListItemText>
                         </ListItem>
-                        <ListItem button>
+
+                        <ListItem button onClick={ () => setToggle( 2 ) }>
+                            <ListItemIcon> <Orders /></ListItemIcon>
+                            <ListItemText>Orders</ListItemText>
+                        </ListItem>
+                        <ListItem button  >
                             <ListItemIcon> <AccountBalance /></ListItemIcon>
-                            <ListItemText><Link to="" style={ getStyle }>Manage Account</Link></ListItemText>
+                            <ListItemText onClick={ handleClickAccount }>Manage Account</ListItemText>
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={ anchorEl2 }
+                                keepMounted
+                                open={ Boolean( anchorEl2 ) }
+                                onClose={ handleClose }
+
+                            >
+
+                                <MenuItem onClick={e=> handleCloseD(7)  }>Vefifications</MenuItem>
+                                <MenuItem onClick={ e=> handleCloseD(8) }>Transactions</MenuItem>
+                                <MenuItem onClick={ e=> handleCloseD(9) }>Refund</MenuItem>
+                                <MenuItem onClick={ e=> handleCloseD(10) }>Invoices</MenuItem>
+                                <MenuItem onClick={ e=> handleCloseD(11) }>Customers</MenuItem>
+
+                            </Menu>
 
                         </ListItem>
-                        <Link to="/manageproduct" style={ getStyle }>
-                            <ListItem button>
-                                <ListItemIcon> <Add /></ListItemIcon>
-                                <ListItemText>Add Product</ListItemText>
-                            </ListItem>
-                        </Link>
-                        <ListItem button>
-                        <ListItemIcon> <EditIcon/></ListItemIcon>
-                        <ListItemText onClick={handleClick}>Manage Products</ListItemText>
+
+                        <ListItem button onClick={ () => setToggle( 4 ) }>
+                            <ListItemIcon> <Add /></ListItemIcon>
+                            <ListItemText>Add Product</ListItemText>
+                        </ListItem>
+
+                        <ListItem button >
+                            <ListItemIcon> <EditIcon /></ListItemIcon>
+                            <ListItemText onClick={ handleClick }>Manage Products</ListItemText>
                             <Menu
                                 id="simple-menu"
                                 anchorEl={ anchorEl }
                                 keepMounted
                                 open={ Boolean( anchorEl ) }
                                 onClose={ handleClose }
-                                
+
                             >
-                            
-                                <MenuItem onClick={ handleClose }>Delete Product</MenuItem>
-                                <MenuItem onClick={ handleClose }>Edit Product</MenuItem>
-                               
+
+                                <MenuItem onClick={e=> handleCloseD(5) }>Delete Product</MenuItem>
+                                <MenuItem onClick={e=> handleCloseD(6) }>Edit Product</MenuItem>
+
                             </Menu>
                         </ListItem>
 
@@ -200,7 +246,7 @@ const Layout = ( props ) => {
                             </ListItem>
                         ) ) }
                     </List>
-                    <Footer />
+                    <Logout />
                 </Drawer>
                 <main
                     className={ clsx( classes.content, {
@@ -210,11 +256,13 @@ const Layout = ( props ) => {
                     <div className={ classes.drawerHeader } />
 
 
-
+                    { ( toggle === 1 ) ? <Home /> : ( toggle === 2 ) ? <Order /> : ( toggle === 4 ) ? <AddProduct /> : ( toggle === 5 ) ? <Delete /> : ( toggle === 6 ) ? <Edit /> : ( toggle === 7 ) ? <Verification /> :
+                        (toggle === 8 ) ? <ListTransactions/>: (toggle === 9 ) ? <Refund/>: (toggle === 11 ) ? <Customers/>: null }
                 </main>
             </div>
 
 
+            <Footer />
         </React.Fragment>
     )
 }

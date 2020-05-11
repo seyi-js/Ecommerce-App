@@ -57,6 +57,7 @@ export const ItemDetails =(props)=> {
                         <h5 className="card-header">
                             { details.item_name }
                         </h5>
+                        <p>{ details.item_id}</p>
                         <div className="card-body">
                             <p className="card-text">{ details.description}</p>
                         </div>

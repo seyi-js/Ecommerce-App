@@ -151,10 +151,21 @@ router.post('/register', (req,res)=>{
      
 });
 
-//@route GET api/user/user
-//@desc  GET  UserData
+//@route POST api/user/checkout
+//@desc  POST
 //@ccess  Private
 
+router.post( '/checkout', redirectLogin, findById, ( req, res ) => {
+    userdata.last_name= req.body.lastname,
+    userdata.first_name= req.body.firstname,
+    userdata.address1= req.body.address1,
+    userdata.address2= req.body.address2,
+    userdata.phone1= req.body.phone1,
+    userdata.phone2 = req.body.phone2
+    
+    userdata.save();
+    res.json({msg: 'Done'})
+})
 
 
 // Users Logout route

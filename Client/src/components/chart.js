@@ -10,50 +10,58 @@ NavLink,
 
 Table
 } from 'reactstrap';
-import React, { Component, browserHistory } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState  } from 'react'
 import util from './utils';
-import {Link} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 
-export default class Chart extends Component {
-    constructor(props) {
-        super(props)
-    
-        this.state = {
-            modal: false,
-            backdrop: false,
-            
-        }
-    }
-
-    
+export  const Chart  =(props)=>{
+    const [ modal, setModal ] = useState( false )
+    const [backdrop, setBackdrop] = useState(false)
+    // const [itemsId, setItemsId] = useState([])
+    const history =useHistory()
   
      
-    toggle = () => {
-         this.setState( {
-            modal: !this.state.modal
-        })
+ const   toggle = () => {
+         setModal( !modal)
             }
-    static propTypes = {
-        prop: PropTypes
-    }
-
     
 
-    render() {
-        const { chartItems, isAuthenticated} = this.props;
+   const  checkoutOption = (total) => {
+       if ( total ) {
+
+        
+           localStorage.setItem( 'total', total );
+           let id = []
+           chartItems.map( ( item ) => {
+               id.push(item._id)
+           } )
+        //    console.log(id)
+           localStorage.setItem( 'itemsId', JSON.stringify(id) );
+            
+          
+           history.push('/checkout')
+        
+           
+           
+       } else {
+           return null
+       }
+    }
+
+   
+        const { chartItems, isAuthenticated} = props;
        
         return (
             <React.Fragment>
-    <NavLink onClick={this.toggle} href="#">
+    <NavLink onClick={toggle} href="#">
         Cart
     </NavLink>
     
             <React.Fragment>
                  
-                <Modal isOpen={ this.state.modal } toggle={ this.toggle } backdrop={ this.state.backdrop }>
-                    <ModalHeader toggle={ this.toggle }>
+                <Modal isOpen={ modal } toggle={ toggle } backdrop={ backdrop }>
+                    <ModalHeader toggle={ toggle }>
                         Shopping Cart
                     </ModalHeader>
                 
@@ -90,7 +98,7 @@ export default class Chart extends Component {
                            <td>{util.formatCurrency(item.price * item.count)} </td>
                            <td><div className="rem">
                                <button className="btn btn-danger sm"
-                                   onClick={ (e)=>this.props.handleRemoveChart( e, item) }> &times;</button>
+                                   onClick={ (e)=>props.handleRemoveChart( e, item) }> &times;</button>
                            </div></td>
                        </tr>
                        ) )}
@@ -114,11 +122,10 @@ export default class Chart extends Component {
                     
                 
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Continue Shopping</Button>{' '}
+                        <Button color="primary" onClick={toggle}>Continue Shopping</Button>{' '}
                         
                         {(chartItems.length !== 0 && isAuthenticated) ?
-                        <Link to={`/checkout/${chartItems.reduce((a,c)=>a + c.price*c.count, 0)}`}>
-                         <Button color="secondary" >Proceed to Checkout</Button> </Link>: ''}
+                         <Button color="secondary" onClick={e=>checkoutOption(chartItems.reduce((a,c)=>a + c.price*c.count, 0))} >Proceed to Checkout</Button> : ''}
                        
                     </ModalFooter>
                     
@@ -133,8 +140,9 @@ export default class Chart extends Component {
 
 </React.Fragment>
         )
-    }
+    
 }
 
+export default Chart
 
 

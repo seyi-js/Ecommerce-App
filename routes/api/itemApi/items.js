@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Items = require( '../../../Models/itemModels/item' );
+const Order = require('../../../Models/Orders')
 const { findById, redirectLogin, isAdmin } = require( '../../../middleware/auth' );
 const multer = require( 'multer' )
 let upload;
@@ -116,7 +117,32 @@ router.post( '/edit/:id', redirectLogin,isAdmin, ( req, res ) => {
 
 })
 
+//@route EDIT api/items/order/:id/
+//@desc  POST Orders
+//@ccess  Private
+router.post( '/order', redirectLogin, findById, ( req, res ) => {
+    const userId = userdata._id;
+    const itemsId = req.body.id
+    const ref= req.body.ref
+    const trans_id= req.body.transaction_id
+    
+    if ( !userId || !itemsId || !ref || !trans_id) {
+        res.json({message: 'Please Login to Order'})
+    } else {
+        const newOrder = new Order( {
+            customer_transact_ref: ref,
+            customer_details: userId,
+            items_ordered: itemsId,
+            transaction_id: trans_id
+        } )
+        Order.create( newOrder )
+            .then( () => res.json( { msg: 'Order Successful' } ) )
+            .catch( err => res.json( { msg: 'Failed to process Order' }))
+        
+    }
 
+   
+})
 
 
 

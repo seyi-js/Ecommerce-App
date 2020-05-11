@@ -2,20 +2,19 @@ import React, { useEffect, useHistory } from 'react';
 import Homeheader from './components/homeHeader'
 import Banner from './components/Banner'
 // import './App.scss'
-import Home from './components/Admin/Dashboard/Home'
+import Layout from './components/Admin/Dashboard/Layout'
 import AddProduct from './components/Admin/Dashboard/AddProduct'
 import Collections from './components/Collections'
 import ItemDetails from './components/ItemDetails'
 import Checkout from './components/Checkout'
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import store from './store';
-import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { loadUser } from './actions/authActions';
 import { connect } from 'react-redux'
 import Footer from './components/Admin/Dashboard/Footer'
 
-export const App = () => {
+export const App = (props) => {
 
 
     useEffect( () => {
@@ -23,10 +22,10 @@ export const App = () => {
         store.dispatch( loadUser() );
     }, [] );
 
-
+    const { isAuthenticated } = props;
 
     return (
-        <Provider store={ store }>
+        
             <Switch>
                 <React.Fragment>
 
@@ -41,13 +40,13 @@ export const App = () => {
 
                         <Footer/>
                     </Route>
-
-                    <Route exact path="/dashboard" component={ Home } />
+                    
+                    <Route exact path="/dashboard" component={Layout } />
                     <Route exact path="/manageproduct" component={ AddProduct } />
 
+                    {(isAuthenticated)? <Route path="/checkout" component={ Checkout } />: <Redirect to='/'/> }
 
-
-                    <Route path="/checkout/:total" component={ Checkout } />
+                    
                     <Route path="/item/details/:id" component={ ItemDetails } />
 
 
@@ -57,10 +56,13 @@ export const App = () => {
 
                 </React.Fragment>
             </Switch>
-        </Provider>
+        
     )
 
 }
 
+const mapStateToProps = (state) =>({
+    isAuthenticated: state.auth.isAuthenticated
+})
 
-export default App
+export default connect(mapStateToProps,null )(App);

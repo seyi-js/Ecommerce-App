@@ -3,9 +3,6 @@ import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
 import { Container, Card, CardBody, CardColumns, CardHeader, Row, Col } from 'reactstrap';
 import PeopleIcon from '@material-ui/icons/People';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
-import Footer from './Footer'
-// import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import Layout from './Layout'
 import PersonIcon from '@material-ui/icons/Person';
 export const Home = () => {
     const [ chartData, setChartData ] = useState( {} );
@@ -62,7 +59,7 @@ export const Home = () => {
     
     return (
         <React.Fragment>
-            <Layout/>
+            
             <Container>
                 <Row>
                     <Col xs="12" sm="6" lg="3">
@@ -141,7 +138,7 @@ export const Home = () => {
                 </Card>
                 </CardColumns>
                 </Container>
-                <Footer/>
+                
         </React.Fragment>
     )
 }

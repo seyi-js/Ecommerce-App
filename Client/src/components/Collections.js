@@ -115,7 +115,7 @@ export const Collections = (props) =>{
 				<React.Fragment>
 					
 
-						<Container className="text-center">
+						<Container className="text-center" style={{marginBottom: '100px'}}>
 						<button className="btn  " > <Chart handleRemoveChart={ handleRemoveChart}
 						
 						chartItems={ chartItems } isAuthenticated={isAuthenticated} />
