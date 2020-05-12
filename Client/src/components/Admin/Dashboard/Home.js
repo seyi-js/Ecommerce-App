@@ -1,15 +1,20 @@
 import React, {useState, useEffect} from 'react'
-import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
+import { Bar, Line, Radar } from 'react-chartjs-2';
 import { Container, Card, CardBody, CardColumns, CardHeader, Row, Col } from 'reactstrap';
 import PeopleIcon from '@material-ui/icons/People';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import PersonIcon from '@material-ui/icons/Person';
+import Axios from 'axios'
+import CountUp from 'react-countup';
+
 export const Home = () => {
     const [ chartData, setChartData ] = useState( {} );
     const [options, setOptions] = useState({})
+    const [accountBalance, setAccountBalance] = useState('')
 
     useEffect( () => {
         getData()
+        getTotals()
     }, [])
 
      //Set Data to State
@@ -56,6 +61,13 @@ export const Home = () => {
 
    }// End Get Data
 
+    const getTotals = () => {
+        Axios
+            .get( 'api/user/transactionsTotal' )
+            .then( res =>setAccountBalance(parseInt(res.data.data.total_volume)))
+            .catch( err => console.log( err ) )
+        
+    }
     
     return (
         <React.Fragment>
@@ -74,7 +86,8 @@ export const Home = () => {
                     <Col xs="12" sm="6" lg="3">
                     <Card className="text-white bg-info " style={{height: '150px', marginBottom: '10px'}} >
                         <CardBody className="pb-0">
-                    <div className="text-value">9.823</div>
+                                <div className="text-value">9.823</div>
+                               
                           <div>Products</div>
                             </CardBody>
                     </Card>
@@ -83,7 +96,8 @@ export const Home = () => {
                     <Col xs="12" sm="6" lg="3">
                     <Card className="text-white bg-info " style={{height: '150px', marginBottom: '10px'}} >
                         <CardBody className="pb-0">
-                    <div className="text-value">9.823</div>
+                                <div className="text-value"><h2>NGN<CountUp end={ accountBalance } delay={ 1000 }
+                                    duration={ 5 } /></h2></div>
                            <AccountBalanceIcon/>{' '} <div>Account balance</div>
                             </CardBody>
                     </Card>

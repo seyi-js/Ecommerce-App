@@ -5,7 +5,6 @@ import Axios from 'axios'
  const  Payment = (props)=> {
 const [key, setKey] = useState("pk_test_4389973b1ac812247d1068db5fda14ff995f3b71");
 const [amount, setAmount] = useState();
-const [cart, setCart] = useState([])
 
 
 const history = useHistory();
@@ -84,7 +83,8 @@ const  metadata= {
     
             return (
                     <React.Fragment>
-                     
+                   
+
                     <div  className="container">
                         
                         <PaystackButton

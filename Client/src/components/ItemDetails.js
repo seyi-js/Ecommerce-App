@@ -3,9 +3,10 @@ import Axios from 'axios';
 import { Link} from 'react-router-dom'
 import { addToCart } from '../actions/itemActions';
 import { connect } from 'react-redux';
-// import Moment from "react-moment"
-import util from './utils';
 
+import util from './utils';
+import store from '../store'
+import { loadUser } from '../actions/authActions';
 
 export const ItemDetails =(props)=> {
     const [ details, setDetails ] = useState( {} );
@@ -13,7 +14,13 @@ export const ItemDetails =(props)=> {
     
     useEffect( () => {
        getItemDetails()
-   },[])
+    }, [details] )
+    
+    useEffect( () => {
+
+        store.dispatch( loadUser() );
+       
+    }, [] );
    const  getItemDetails = () => {
         let itemId = props.match.params.id;
 
@@ -52,12 +59,13 @@ export const ItemDetails =(props)=> {
                     </div>
                     
                     <hr />
+                    <p><strong>ProductId:</strong>{ ' '}{ details.item_id}</p>
                     <div className="card">
-                   
+                       
                         <h5 className="card-header">
                             { details.item_name }
                         </h5>
-                        <p>{ details.item_id}</p>
+                        
                         <div className="card-body">
                             <p className="card-text">{ details.description}</p>
                         </div>

@@ -102,7 +102,7 @@ const Layout = ( props ) => {
     const [ anchorEl2, setAnchorEl2 ] = React.useState( null );
     const [ anchorEl, setAnchorEl ] = React.useState( null );
     
-    const [ toggle, setToggle ] = React.useState( 7 )
+    const [ toggle, setToggle ] = React.useState( 1 )
     const handleDrawerOpen = () => {
         setOpen( true );
     };

@@ -154,7 +154,8 @@ export const Collections = (props) =>{
 			)
 			return (
 
-			<React.Fragment>
+				<React.Fragment>
+					
 					<div className="mt-10" style={ { marginTop: '100px' } }>
 						<SelectBar filteredItems={ filteredItem } sort={ sort } handleChangeSort={ handleChangeSort } />
 						

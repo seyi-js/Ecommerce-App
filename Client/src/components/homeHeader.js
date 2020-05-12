@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import RegisterModal from './auth/RegisterModal'
-import LoginModal from './auth/LoginModal'
 import Logout from './auth/logout'
-import AdminBoard from './Admin/Admin'
-import {Route} from 'react-router-dom'
+
 
 import {
     Collapse,
@@ -43,7 +41,7 @@ export class Homeheader extends Component {
             <React.Fragment>
             <NavItem>
             <NavLink>
-                <Link to='/admin' style={ { color: 'white', textDecoration: 'none' } }>AdminBoard</Link>
+                <Link to='/dashboard' style={ { color: 'white', textDecoration: 'none' } }>AdminBoard</Link>
             </NavLink>
         </NavItem>
             </React.Fragment>
@@ -67,9 +65,9 @@ export class Homeheader extends Component {
         const visitorsLinks = (
             <React.Fragment>
             <NavItem>
-
-                <LoginModal />
-
+                <NavLink>
+                    <Link to='/login' style={ { color: 'white', textDecoration: 'none' } }>Login</Link>
+                </NavLink>
             </NavItem>
             <NavItem>
                 <RegisterModal />
@@ -113,9 +111,7 @@ export class Homeheader extends Component {
                         </Collapse>
                     </Container>
                 </Navbar>
-                { ( isAuthenticated && isAdmin ) ? <Route path="/admin" component={ AdminBoard } /> : 
-                ''
-         }
+               
             </React.Fragment>
         )
 

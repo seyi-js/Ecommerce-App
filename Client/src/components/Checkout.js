@@ -4,6 +4,8 @@ import Homeheader from './homeHeader'
 import Footer from './Admin/Dashboard/Footer'
 import Axios from 'axios'
 import { connect } from 'react-redux';
+import store from '../store'
+import { loadUser } from '../actions/authActions';
 import Payment from './Payment'
 export const Checkout = ( props ) => {
     
@@ -14,10 +16,17 @@ export const Checkout = ( props ) => {
     const [phone1, setPhone1]= useState(props.user.phone1)
     const [phone2, setPhone2]= useState(props.user.phone2)
     const [ toggle, setToggle ] = useState( false )
-    const [email, setEmail] = useState(props.user.email);
+    const [ email] = useState( props.user.email );
+    
+
+
+    useEffect( () => {
+
+        store.dispatch( loadUser() );
+       
+    }, [toggle] );
     const handleCheckOutDetails = ( e ) => {
         e.preventDefault();
-        const amount = Number( localStorage.getItem( 'total' ) )
         
         // console.log(amount + 0 + 0)
         // console.log(this.state)
